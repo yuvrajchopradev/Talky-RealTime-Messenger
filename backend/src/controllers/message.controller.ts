@@ -1,0 +1,22 @@
+import { Request, Response } from "express";
+import { asyncHandler } from "../middlewares/asyncHandler.middleware";
+import { HTTPSTATUS } from "../config/http.config";
+import { sendMessageSchema } from "../validators/message.validator";
+import { sendMessageService } from "../services/message.service";
+
+export const sendMessageController = asyncHandler(async (req: Request, res: Response) => {
+    if (!req.user?._id) {
+        return res.status(HTTPSTATUS.UNAUTHORIZED).json({
+            message: "Unauthorized",
+        });
+    }
+    const userId = req.user._id;
+    const body = sendMessageSchema.parse(req.body);
+
+    const result = await sendMessageService(userId, body);
+
+    return res.status(HTTPSTATUS.OK).json({
+        message: "Message sent successfully",
+        ...result,
+    });
+});

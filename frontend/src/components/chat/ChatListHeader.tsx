@@ -1,0 +1,31 @@
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
+import { Search } from "lucide-react";
+import {NewChatPopover} from "./NewChatPopover";
+
+export default function ChatListHeader({ onSearch }: { onSearch: (val: string) => void }) {
+    return (
+        <div
+        className="px-3 py-3 border-b border-border" >
+            <div
+            className="flex items-center justify-between mb-3" >
+                <h1 className="text-xl font-semibold">Chat</h1>
+                <div>
+                    <NewChatPopover />
+                </div>
+            </div>
+
+            <div>
+                <InputGroup
+                className="bg-background text-sm" >
+                    <InputGroupInput
+                    placeholder="Search..."
+                    onChange={(e) => onSearch(e.target.value)} />
+
+                    <InputGroupAddon>
+                        <Search className="h-4 w-4 text-muted-foreground" />
+                    </InputGroupAddon>
+                </InputGroup>
+            </div>
+        </div>
+    );
+}
